@@ -1,0 +1,94 @@
+<div class="page-bg">
+  <div class="container py-4">
+    <h3 class="fw-bold mb-4">Reports & Analytics Dashboard</h3>
+
+    @if (claimStore.loading()) {
+      <div class="text-center py-5">Loading...</div>
+    } @else {
+      <div class="row g-3 mb-4">
+        <div class="col-md-4">
+          <div class="stat-card">
+            <div class="stat-icon blue"><i class="bi bi-files"></i></div>
+            <div>
+              <small>TOTAL CLAIMS</small>
+              <h4>{{ claimStore.totalClaims() }}</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="stat-card">
+            <div class="stat-icon green"><i class="bi bi-currency-rupee"></i></div>
+            <div>
+              <small>TOTAL CLAIMED AMOUNT</small>
+              <h4>₹{{ claimStore.totalAmount() | number: '1.0-0' }}</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="stat-card">
+            <div class="stat-icon red"><i class="bi bi-shield-exclamation"></i></div>
+            <div>
+              <small>HIGH RISK</small>
+              <h4>{{ claimStore.highRiskCount() }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <div class="card chart-card">
+            <div class="card-header">Status Distribution</div>
+            <div class="card-body">
+              <canvas
+                baseChart
+                [data]="statusChartData"
+                [type]="statusChartType"
+                [options]="chartOptions"
+              ></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="card chart-card">
+            <div class="card-header">Risk Distribution</div>
+            <div class="card-body">
+              <canvas
+                baseChart
+                [data]="riskChartData"
+                [type]="riskChartType"
+                [options]="chartOptions"
+              ></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="card chart-card">
+            <div class="card-header">Monthly Trend</div>
+            <div class="card-body">
+              <canvas
+                baseChart
+                [data]="monthlyChartData"
+                [type]="monthlyChartType"
+                [options]="chartOptions"
+              ></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card chart-card">
+            <div class="card-header">Claim Type Wise</div>
+            <div class="card-body">
+              <canvas
+                baseChart
+                [data]="typeChartData"
+                [type]="typeChartType"
+                [options]="chartOptions"
+              ></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,71 @@
+.page-bg {
+  background: #f6f7fb;
+  min-height: 100vh;
+}
+
+.stat-card {
+  background: #fff;
+  padding: 18px;
+  border-radius: 16px;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eef0f4;
+}
+.stat-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+}
+.stat-icon.blue {
+  background: #dbeafe;
+  color: #2563eb;
+}
+.stat-icon.green {
+  background: #dcfce7;
+  color: #16a34a;
+}
+.stat-icon.red {
+  background: #fee2e2;
+  color: #dc2626;
+}
+.stat-card small {
+  font-size: 10px;
+  font-weight: 700;
+  color: #667085;
+  letter-spacing: 0.05em;
+}
+.stat-card h4 {
+  margin: 0;
+  font-weight: 800;
+  color: #101828;
+}
+
+/* THIS FIXES HUGE CHART */
+.chart-card {
+  border-radius: 16px;
+  border: 1px solid #eef0f4;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  background: #fff;
+  overflow: hidden;
+  height: 100%;
+}
+.chart-card.card-header {
+  background: #fff;
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #667085;
+  border-bottom: 1px solid #f1f5f9;
+  padding: 14px 18px;
+}
+.chart-card.card-body {
+  height: 300px; /* FIXED HEIGHT - not full screen */
+  padding: 16px;
+  position: relative;
+}

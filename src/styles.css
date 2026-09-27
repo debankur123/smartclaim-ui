@@ -1,1 +1,67 @@
 /* You can add global styles to this file, and also import other style files */
+/* SecureClaim 360 - Global Design System - Bootstrap + CSS only */
+:root {
+    --primary: #1e293b;
+    /* Generic shade - slate-800, use for ALL primary buttons */
+    --primary-hover: #0f172a;
+    --bg: #f8fafc;
+    --card-border: #e2e8f0;
+    --text-muted: #64748b;
+    --radius: 12px;
+}
+
+body {
+    background: var(--bg);
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Generic Button System */
+.btn-primary {
+    background: var(--primary) !important;
+    border-color: var(--primary) !important;
+    border-radius: 10px;
+    padding: 11px 20px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover) !important;
+}
+
+.btn-outline-secondary {
+    border-radius: 10px;
+    border-color: var(--card-border);
+    color: var(--primary);
+    background: #fff;
+    font-weight: 500;
+}
+
+.form-card {
+    max-width: 860px;
+    border-radius: 16px;
+    border: 1px solid var(--card-border);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+}
+
+.form-label {
+    font-size: 11.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #475569;
+    margin-bottom: 6px;
+}
+
+.form-control,
+.form-select {
+    height: 44px;
+    border-radius: 10px;
+    border: 1px solid var(--card-border);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(30, 41, 59, 0.08);
+}

@@ -1,0 +1,226 @@
+/* Page */
+.page-bg {
+  background: #f6f7fb;
+  min-height: 100vh;
+}
+.container {
+  max-width: 1240px;
+}
+
+/* Stat Cards - Fintech style */
+.stat-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 18px 20px;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  box-shadow:
+    0 1px 2px rgba(16, 24, 40, 0.04),
+    0 1px 3px rgba(16, 24, 40, 0.06);
+  border: 1px solid #eef0f4;
+  height: 100%;
+}
+.stat-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.stat-total .stat-icon {
+  background: #eef4ff;
+  color: #4f46e5;
+}
+.stat-pending .stat-icon {
+  background: #fff7ed;
+  color: #f59e0b;
+}
+.stat-approved .stat-icon {
+  background: #ecfdf5;
+  color: #10b981;
+}
+.stat-risk .stat-icon {
+  background: #fef2f2;
+  color: #ef4444;
+}
+.stat-card small {
+  color: #667085;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.stat-card h4 {
+  margin: 2px 0 0;
+  font-weight: 700;
+  font-size: 22px;
+  color: #101828;
+}
+.stat-sub {
+  font-size: 11px;
+  color: #98a2b3;
+}
+
+/* Card Table */
+.card {
+  border: 1px solid #eef0f4 !important;
+}
+.rounded-4 {
+  border-radius: 18px !important;
+}
+
+/* DataTable - Modern */
+.dt-table {
+  font-size: 13.5px;
+  --bs-table-bg: #fff;
+}
+.dt-table thead th {
+  background: #f9fafb !important;
+  color: #667085;
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid #eef0f4 !important;
+  padding: 12px 14px;
+  white-space: nowrap;
+}
+.dt-table tbody td {
+  padding: 13px 14px;
+  border-bottom: 1px solid #f2f4f7 !important;
+  color: #344054;
+  vertical-align: middle;
+}
+.dt-table tbody tr:last-child td {
+  border-bottom: 0 !important;
+}
+.dt-table tbody tr:hover {
+  background: #f9fafb;
+}
+
+/* Pills */
+.type-pill {
+  background: #f2f4f7;
+  color: #344054;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.risk-pill {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.risk-green {
+  background: #ecfdf5;
+  color: #059669;
+}
+.risk-yellow {
+  background: #fffbeb;
+  color: #d97706;
+}
+.risk-red {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+/* Status Badge - Fintech with dot */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border: 1px solid transparent;
+  line-height: 1;
+}
+.status-pill::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Submitted = Orange */
+.status-submitted {
+  background: #fff7ed;
+  color: #9a3412;
+  border-color: #ffedd5;
+}
+.status-submitted::before {
+  background: #f97316;
+}
+
+/* Settled / Approved = Green */
+.status-settled,
+.status-approved {
+  background: #ecfdf5;
+  color: #065f46;
+  border-color: #d1fae5;
+}
+.status-settled::before,
+.status-approved::before {
+  background: #10b981;
+}
+
+/* If you have Rejected */
+.status-rejected {
+  background: #fef2f2;
+  color: #991b1b;
+  border-color: #fee2e2;
+}
+.status-rejected::before {
+  background: #ef4444;
+}
+
+/* Pending Review */
+.status-pending {
+  background: #eff6ff;
+  color: #1e40af;
+  border-color: #dbeafe;
+}
+.status-pending::before {
+  background: #3b82f6;
+}
+
+/* Inputs */
+.form-select-sm,
+.form-control-sm {
+  border-radius: 10px;
+  border: 1px solid #e4e7ec;
+  font-size: 13px;
+  padding: 7px 10px;
+}
+.form-select-sm:focus,
+.form-control-sm:focus {
+  box-shadow: 0 0 0 3px #eef4ff;
+  border-color: #b3b8ff;
+}
+
+/* Pagination - Fintech */
+.pagination .page-link {
+  border-radius: 8px;
+  margin: 0 2px;
+  border: 1px solid #e4e7ec;
+  color: #344054;
+  font-size: 12px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+.pagination .page-item.active .page-link {
+  background: #101828;
+  border-color: #101828;
+  color: #fff;
+}
+.pagination .page-item.disabled .page-link {
+  opacity: 0.5;
+}

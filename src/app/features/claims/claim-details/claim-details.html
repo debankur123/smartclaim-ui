@@ -1,0 +1,160 @@
+<div class="container py-4">
+  <div *ngIf="isLoading" class="text-center py-5">
+    <div class="spinner-border text-dark"></div>
+    <p class="mt-2 text-muted">Loading your claim details...</p>
+  </div>
+
+  <div *ngIf="!isLoading && claim" class="card form-card mx-auto">
+    <!-- HEADER with help -->
+    <div class="card-header bg-white p-4 border-bottom">
+      <div class="d-flex justify-content-between align-items-start">
+        <div>
+          <div class="d-flex align-items-center gap-2">
+            <h5 class="mb-0 fw-bold">{{claim.claimNumber}}</h5>
+            <small class="text-muted" title="Unique ID for tracking this claim">ⓘ</small>
+          </div>
+          <small class="text-muted d-block mt-1">
+            Filed on {{claim.createdDate | date:'dd MMM yyyy'}} • Policy: {{claim.policyNumber}}
+          </small>
+        </div>
+        <span class="badge fs-6 px-3 py-2" [ngClass]="{
+          'bg-warning text-dark': claim.status === 'Submitted',
+          'bg-info': claim.status === 'Verification',
+          'bg-success': claim.status === 'Approved' || claim.status === 'Settled',
+          'bg-danger': claim.status === 'Rejected'
+        }">{{claim.status}}</span>
+      </div>
+
+      <!-- STATUS EXPLAINER - For noob user -->
+      <div class="alert alert-light border mt-3 mb-0 py-2 small">
+        <span *ngIf="claim.status === 'Submitted'">📝 <b>Submitted:</b> Your claim is received. Our team will start verification soon.</span>
+        <span *ngIf="claim.status === 'Verification'">🔍 <b>Verification:</b> Our officer is checking your bill and documents.</span>
+        <span *ngIf="claim.status === 'Approved'">✅ <b>Approved:</b> Great! Your claim is approved. Payment will be processed.</span>
+        <span *ngIf="claim.status === 'Settled'">💰 <b>Settled:</b> Amount has been paid to your account.</span>
+      </div>
+    </div>
+
+    <div class="card-body p-4">
+      <!-- MAIN INFO GRID with labels -->
+      <div class="row g-4 mb-4">
+        <div class="col-md-6">
+          <label class="form-label">POLICY NUMBER <small class="info-icon" title="Your insurance policy number from your policy document">ⓘ</small></label>
+          <div class="field-value">{{claim.policyNumber}}</div>
+          <small class="field-hint">Your motor insurance policy</small>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">CLAIM TYPE</label>
+          <div class="field-value">{{claim.claimType}}</div>
+          <small class="field-hint">Type of insurance claim</small>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">AI RISK SCORE <small class="info-icon" title="AI checks if bill looks genuine. 0-30% is safe, >60% needs manual check">ⓘ</small></label>
+          <div class="field-value" [class.text-success]="claim.fraudRiskScore < 30" [class.text-warning]="claim.fraudRiskScore >= 30 && claim.fraudRiskScore < 60" [class.text-danger]="claim.fraudRiskScore >= 60">
+            {{claim.fraudRiskScore}}% <small *ngIf="claim.fraudRiskScore < 30">- Safe</small><small *ngIf="claim.fraudRiskScore >= 60">- Needs Check</small>
+          </div>
+          <small class="field-hint">Auto-checked by system</small>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">YOU CLAIMED <small class="info-icon" title="Total amount written on your uploaded bill">ⓘ</small></label>
+          <div class="field-value fs-5">₹{{claim.claimedAmount | number:'1.0-0'}}</div>
+          <small class="field-hint">Amount from your bill PDF</small>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">YOU WILL GET (PAYABLE) <small class="info-icon" title="Final amount after deductible and depreciation as per policy. Calculated by system automatically">ⓘ</small></label>
+          <div class="field-value fs-5 text-success">
+            <span *ngIf="claim.settlementAmount || claim.payableAmount">₹{{(claim.settlementAmount || claim.payableAmount) | number:'1.0-0'}}</span>
+            <span *ngIf="!claim.settlementAmount &&!claim.payableAmount" class="text-muted">₹Calculating... <small>Will show after verification</small></span>
+          </div>
+          <small class="field-hint">After deductions - from calculation engine</small>
+        </div>
+
+        <div class="col-12" *ngIf="claim.documentUrl">
+          <label class="form-label">UPLOADED BILL / DOCUMENT</label>
+          <div class="d-flex align-items-center gap-2 p-2 border rounded bg-light">
+            <span class="fs-4">📄</span>
+            <div class="flex-grow-1">
+              <div class="fw-semibold small">Bill-{{claim.claimNumber}}.pdf</div>
+              <small class="text-muted">Click to view your uploaded garage/hospital bill</small>
+            </div>
+            <a [href]="claim.documentUrl" target="_blank" class="btn btn-sm btn-outline-secondary">View Bill PDF</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- SETTLEMENT BREAKDOWN - Very important for noob -->
+      <div class="bg-light rounded p-3 mb-4" *ngIf="claim.settlementAmount || claim.payableAmount">
+        <label class="form-label mb-2">HOW WE CALCULATED YOUR PAYMENT?</label>
+        <div class="small">
+          <div class="d-flex justify-content-between"><span>Your Bill Amount:</span><span>₹{{claim.claimedAmount}}</span></div>
+          <div class="d-flex justify-content-between text-muted"><span>- Deductible (as per policy):</span><span>- ₹1000</span></div>
+          <div class="d-flex justify-content-between text-muted"><span>- Depreciation:</span><span>- ₹{{claim.claimedAmount - (claim.settlementAmount || claim.payableAmount) - 1000}}</span></div>
+          <hr class="my-2">
+          <div class="d-flex justify-content-between fw-bold text-success"><span>You Will Get:</span><span>₹{{claim.settlementAmount || claim.payableAmount}}</span></div>
+        </div>
+      </div>
+
+      <!-- WORKFLOW with explanation -->
+      <div class="border-top pt-4 mb-4">
+        <label class="form-label">WHERE IS YOUR CLAIM NOW? - STEP BY STEP</label>
+        <div class="timeline mt-3">
+          <div class="timeline-step" [class.active]="true">
+            <div class="dot bg-dark"></div>
+            <div>
+              <div class="fw-bold small">1. Submitted</div>
+              <small class="text-muted">You filed claim - Done on {{claim.createdDate | date:'dd MMM'}}</small>
+            </div>
+          </div>
+          <div class="timeline-step" [class.active]="claim.status === 'Verification' || claim.status === 'Approved' || claim.status === 'Settled'">
+            <div class="dot" [ngClass]="claim.status === 'Verification'? 'bg-info' : 'bg-light border'"></div>
+            <div>
+              <div class="fw-bold small">2. Verification</div>
+              <small class="text-muted">We check your bill, photos and policy</small>
+            </div>
+          </div>
+          <div class="timeline-step" [class.active]="claim.status === 'Approved' || claim.status === 'Settled'">
+            <div class="dot" [ngClass]="claim.status === 'Approved'? 'bg-success' : 'bg-light border'"></div>
+            <div>
+              <div class="fw-bold small">3. Approved</div>
+              <small class="text-muted">Your claim is approved by officer</small>
+            </div>
+          </div>
+          <div class="timeline-step" [class.active]="claim.status === 'Settled'">
+            <div class="dot" [ngClass]="claim.status === 'Settled'? 'bg-success' : 'bg-light border'"></div>
+            <div>
+              <div class="fw-bold small">4. Settled - Money Paid</div>
+              <small class="text-muted">Amount transferred to your bank</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACTION BUTTONS with help text -->
+      <div class="border-top pt-3">
+        <label class="form-label mb-2">WHAT NEXT? - ACTION NEEDED</label>
+        <div class="d-flex gap-2 flex-wrap align-items-center">
+          <div *ngIf="claim.status === 'Submitted'">
+            <button (click)="UpdateClaimStatus('Verification')" class="btn btn-generic">Move to Verification</button>
+            <small class="d-block text-muted mt-1">Click to start checking this claim</small>
+          </div>
+          <div *ngIf="claim.status === 'Verification'">
+            <button (click)="UpdateClaimStatus('Approved')" class="btn btn-generic">✓ Approve Claim</button>
+            <small class="d-block text-muted mt-1">Approve if documents are genuine</small>
+          </div>
+          <div *ngIf="claim.status === 'Verification'">
+            <button (click)="UpdateClaimStatus('Rejected')" class="btn btn-outline-danger">✕ Reject</button>
+            <small class="d-block text-muted mt-1">Reject if fraud found</small>
+          </div>
+          <div *ngIf="claim.status === 'Approved'">
+            <button (click)="UpdateClaimStatus('Settled')" class="btn btn-generic">💰 Settle & Pay ₹{{claim.settlementAmount || claim.payableAmount}}</button>
+            <small class="d-block text-muted mt-1">This will transfer money</small>
+          </div>
+
+          <button (click)="GoBack()" class="btn btn-outline-secondary ms-auto">← Back to My Claims</button>
+        </div>
+      </div>
+
+      <small class="text-muted d-block mt-3 text-center">Need help? Call 1800-425-33333 • Settlement auto-calculated via stored procedure</small>
+    </div>
+  </div>
+</div>

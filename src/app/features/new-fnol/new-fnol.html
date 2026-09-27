@@ -1,0 +1,99 @@
+<div class="container py-4">
+  <div class="card form-card mx-auto border-0 shadow-sm rounded-4">
+    <div class="card-header bg-white border-0 pt-4 px-4 rounded-top-4">
+      <h5 class="mb-1 fw-bold">File New Claim</h5>
+      <small class="text-muted">First Notice of Loss • SecureClaim 360</small>
+    </div>
+    <div class="card-body p-4">
+      <form [formGroup]="fnolForm" (ngSubmit)="Submit()">
+        <div class="row g-3">
+
+          <!-- Policy with Typeahead -->
+          <div class="col-md-6">
+            <label class="form-label small fw-semibold">Policy Number *</label>
+            <div class="position-relative">
+              <input
+                formControlName="policyNumber"
+                class="form-control"
+                placeholder="e.g 231200312400001145"
+                autocomplete="off"
+                (blur)="showSuggestions = false"
+                (focus)="showSuggestions = suggestions.length > 0"
+              />
+              @if (showSuggestions) {
+                <div class="typeahead-dropdown">
+                  @for (s of suggestions; track s) {
+                    <div class="typeahead-item" (mousedown)="SelectSuggestion(s)">{{ s }}</div>
+                  }
+                </div>
+              }
+            </div>
+            @if (fnolForm.get('policyNumber')?.touched && fnolForm.get('policyNumber')?.invalid) {
+              <div class="text-danger small mt-1">Min 10 chars required</div>
+            }
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label small fw-semibold">Claim Type</label>
+            <select formControlName="claimType" class="form-select">
+              <option>Motor</option>
+              <option>Health</option>
+              <option>Property</option>
+            </select>
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label small fw-semibold">Policy Type</label>
+            <select formControlName="policyType" class="form-select">
+              <option>Comprehensive</option>
+              <option>ThirdParty</option>
+              <option>Own Damage</option>
+            </select>
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label small fw-semibold">Claimed Amount *</label>
+            <div class="input-group">
+              <span class="input-group-text">₹</span>
+              <input type="number" formControlName="claimedAmount" class="form-control" placeholder="42000" />
+            </div>
+            @if (fnolForm.get('claimedAmount')?.touched && fnolForm.get('claimedAmount')?.invalid) {
+              <div class="text-danger small mt-1">Claimed Amount is required</div>
+            }
+          </div>
+
+          <div class="col-md-8">
+            <label class="form-label small fw-semibold">Upload Document (Bill / Invoice)</label>
+            <input type="file" class="form-control" (change)="OnFileSelected($event)" />
+          </div>
+
+          @if (isScanning || ocrText) {
+            <div class="col-12">
+              <div class="card bg-light border-0 mt-1 rounded-3">
+                <div class="card-body p-3">
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <small class="fw-bold text-uppercase" style="font-size:10px; letter-spacing:.05em;">AI Scan Result</small>
+                    <div class="d-flex gap-2 align-items-center">
+                      @if (isScanning) { <span class="spinner-border spinner-border-sm"></span> }
+                      @if (extractedAmount) { <span class="badge bg-success rounded-pill">₹{{ extractedAmount }} detected</span> }
+                    </div>
+                  </div>
+                  <small class="text-muted d-block" style="white-space: pre-line; max-height: 100px; overflow-y: auto">{{ ocrText | slice:0:300 }}...</small>
+                </div>
+              </div>
+            </div>
+          }
+
+          <div class="col-12 mt-3">
+            <button type="submit" class="btn btn-dark w-100 py-2 rounded-3 fw-semibold" [disabled]="isSubmitting || isScanning">
+              @if (isSubmitting) { <span class="spinner-border spinner-border-sm me-2"></span> }
+              Submit FNOL & Calculate Settlement
+            </button>
+            <p class="text-center small text-muted mt-2">Settlement auto-calculated via USP_CLAIM_SETTLEMENT</p>
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

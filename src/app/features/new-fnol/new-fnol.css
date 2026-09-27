@@ -1,0 +1,52 @@
+.input-group-text {
+  background: #fff;
+  border: 1px solid var(--card-border);
+  border-right: 0;
+  border-radius: 10px 0 0 10px;
+}
+
+.input-group.form-control {
+  border-left: 0;
+}
+
+.form-card {
+  max-width: 780px;
+  border: 1px solid #eef0f4;
+}
+.form-control,
+.form-select,
+.input-group-text {
+  border-radius: 10px;
+  font-size: 13.5px;
+  border-color: #e4e7ec;
+}
+.form-control:focus,
+.form-select:focus {
+  box-shadow: 0 0 0 3px #eef4ff;
+  border-color: #b3b8ff;
+}
+.form-label {
+  color: #344054;
+}
+
+.typeahead-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 20;
+  background: #fff;
+  border: 1px solid #e4e7ec;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(16, 24, 40, 0.12);
+  max-height: 200px;
+  overflow-y: auto;
+}
+.typeahead-item {
+  padding: 10px 14px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.typeahead-item:hover {
+  background: #f9fafb;
+}
